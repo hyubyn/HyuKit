@@ -1,0 +1,6 @@
+framework module Pods_HyuKit {
+  umbrella header "Pods-HyuKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
