@@ -18,9 +18,19 @@ struct GradientButtonProperties {
     var cornerRadius: CGFloat
     var shadowOffset: CGSize
     var shadowOpacity: Float
-    var showShadow: Bool
     
-    init(frame: CGRect!, title: String?, titleColor: UIColor?, gradientColors: [UIColor]?, gradientOrientation: GradientOrientation, cornerRadius: CGFloat = 5, shadowOffset: CGSize = CGSize(width: 0, height: 1.0), shadowOpacity: Float = 0.7, showShadow: Bool = false) {
+    init() {
+        frame = CGRect()
+        title = ""
+        titleColor = nil
+        gradientColors = nil
+        gradientOrientation = .horizontal
+        cornerRadius = 0
+        shadowOffset = CGSize()
+        shadowOpacity = 1.0
+    }
+    
+    init(frame: CGRect!, title: String?, titleColor: UIColor?, gradientColors: [UIColor]?, gradientOrientation: GradientOrientation, cornerRadius: CGFloat = 5, shadowOffset: CGSize = CGSize(width: 0.5, height: 0.5), shadowOpacity: Float = 1.0) {
         
         self.frame = frame
         
@@ -38,52 +48,59 @@ struct GradientButtonProperties {
         
         self.shadowOpacity = shadowOpacity
         
-        self.showShadow = showShadow
     }
+    
 }
 
 
-class HyuButton: UIButton {
+class HyuButton: UIView {
+    
     var properties: GradientButtonProperties?
+    var button: UIButton!
     
     init(properties: GradientButtonProperties) {
         
         super.init(frame: properties.frame)
         
-        clipsToBounds = true
-        
         self.properties = properties
         
-        setTitle(properties.title, for: .normal)
-        
-        setTitleColor(properties.titleColor, for: .normal)
-        
-        titleLabel?.minimumScaleFactor = 0.5
-        
-        titleLabel?.adjustsFontSizeToFitWidth = true
-        
-        if !properties.showShadow {
-            
-            createCornerGradientBackground(colors: properties.gradientColors, gradientOrientation: properties.gradientOrientation)
-            
-        } else {
-            self.layer.masksToBounds = false
-            if let colors = properties.gradientColors {
-                backgroundColor = colors[0]
-            } else {
-                backgroundColor = AppColor.defaultAppTheme
-            }
-        }
-        
-        layer.cornerRadius = properties.cornerRadius
+        //create shadow view
+        backgroundColor = UIColor.clear
         
         layer.shadowOpacity = properties.shadowOpacity
         
         layer.shadowOffset = properties.shadowOffset
         
-        layer.shadowRadius = properties.cornerRadius
-        
         layer.shadowColor = UIColor.black.cgColor
+        
+        layer.shadowRadius = 2
+        
+        layer.masksToBounds = false
+        //create subview
+        
+        let width = properties.frame.size.width
+        
+        let height = properties.frame.size.height
+        
+        button = UIButton(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        
+        addSubview(button)
+        
+        button.clipsToBounds = true
+        
+        button.setTitle(properties.title, for: .normal)
+        
+        button.setTitleColor(properties.titleColor, for: .normal)
+        
+        button.titleLabel?.minimumScaleFactor = 0.5
+        
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        button.titleLabel?.numberOfLines = 2
+        
+        button.layer.cornerRadius = properties.cornerRadius
+        
+        createCornerGradientBackground(colors: properties.gradientColors, gradientOrientation: properties.gradientOrientation)
         
 
     }
@@ -93,7 +110,9 @@ class HyuButton: UIButton {
     }
     
     private func createCornerGradientBackground(colors gradientColors: [UIColor]?, gradientOrientation orientations: GradientOrientation) {
+        
         guard let colors = gradientColors else { return }
-        self.applyGradient(withColours: colors, gradientOrientation: orientations);
+        
+        button.applyGradient(withColours: colors, gradientOrientation: orientations);
     }
 }

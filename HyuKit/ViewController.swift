@@ -9,12 +9,15 @@
 import UIKit
 import SnapKit
 import RxCocoa
+import RxSwift
 
 class ViewController: BaseViewViewController {
 
     lazy var demoButton: HyuButton = {
-        return HyuButton(properties: GradientButtonProperties(frame: CGRect(x: self.screenWidth / 4, y: self.screenHeight / 2 - 15, width: self.screenWidth / 2, height: 30), title: "Hello Hyu's button", titleColor: UIColor.white, gradientColors: [UIColor.blue, UIColor.green], gradientOrientation: .horizontal, cornerRadius: 15, showShadow: false))
+        return HyuButton(properties: GradientButtonProperties(frame: CGRect(x: self.screenWidth / 4, y: self.screenHeight / 2 - 15, width: 100, height: 80), title: "Start", titleColor: UIColor.white, gradientColors: [UIColor.blue, UIColor.green], gradientOrientation: .horizontal, cornerRadius: 30))
     }()
+    
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,14 +27,15 @@ class ViewController: BaseViewViewController {
     
     func setupView() {
         view.addSubview(demoButton)
-        demoButton.addTarget(self, action: #selector(demoButtonTapped), for: .touchUpInside)
-        
     }
     
     func setupRx() {
-        demoButton.rx.tap.bindNext { _ in
-            print("The button is pressed")
-        }.dispose()
+        demoButton.button.rx.tap
+            .debug("Button tapped")
+            .subscribe(onNext: { [weak self] in
+                self?.demoButtonTapped()
+            })
+            .disposed(by: disposeBag)
     }
 
     func demoButtonTapped() {
