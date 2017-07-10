@@ -14,20 +14,24 @@ protocol ColorPickerDelegate {
 
 class ColorPicker: UIView {
     
-    var listColor = [UIColor.white, UIColor.blue, UIColor.green, UIColor.yellow, UIColor.orange, UIColor.brown, UIColor.red, UIColor.purple, UIColor.gray, UIColor.darkGray, UIColor.black]
+    var listColor = [UIColor.white, UIColor.blue, UIColor.green, UIColor.yellow, UIColor.orange, UIColor.brown, UIColor.red, UIColor.purple, UIColor.gray, UIColor.darkGray]
     
     var delegate: ColorPickerDelegate?
+    
+    var shouldChangeBackgroundColor = false
     
     lazy var collection: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize.init(width: 50, height: 50)
-        flowLayout.estimatedItemSize = CGSize.init(width: 50, height: 50)
+        flowLayout.estimatedItemSize = CGSize.init(width: 70, height: 70)
         flowLayout.minimumInteritemSpacing = 5.0
         flowLayout.scrollDirection = .horizontal
         flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5)
+        flowLayout.footerReferenceSize = CGSize.init(width: 70, height: 70)
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "ColorPickerCell")
         return collectionView
     }()
@@ -53,6 +57,10 @@ class ColorPicker: UIView {
             maker.edges.equalToSuperview()
         }
         
+        backgroundColor = UIColor.white
+        
+        collection.backgroundColor = backgroundColor
+        
         isHidden = true
     }
     
@@ -65,6 +73,7 @@ class ColorPicker: UIView {
     func hideColorPicker() {
         animateHide()
     }
+
 }
 
 extension ColorPicker: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -80,12 +89,18 @@ extension ColorPicker: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColorPickerCell", for: indexPath) as UICollectionViewCell
         cell.backgroundColor = listColor[indexPath.row]
         cell.addCircle()
+        cell.layer.borderWidth = 0.2
+        cell.layer.borderColor = UIColor.black.cgColor
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let delegate = delegate {
             hideColorPicker()
+            if shouldChangeBackgroundColor {
+                collectionView.backgroundColor = listColor[indexPath.row].getInverseColor()
+                collectionView.reloadData()
+            }
             delegate.didSelectColor(color: listColor[indexPath.row])
         }
     }

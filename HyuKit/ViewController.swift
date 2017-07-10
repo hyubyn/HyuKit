@@ -19,8 +19,8 @@ class ViewController: BaseViewViewController {
     
     lazy var colorPicker: ColorPicker = {
         let picker = ColorPicker()
-        picker.backgroundColor = UIColor.brown
         picker.delegate = self
+        picker.backgroundColor = UIColor.white
         return picker
     }()
     
@@ -37,7 +37,7 @@ class ViewController: BaseViewViewController {
         view.addSubview(colorPicker)
         
         colorPicker.snp.makeConstraints { (maker) in
-            maker.height.equalTo(60)
+            maker.height.equalTo(80)
             maker.leading.trailing.equalTo(view).inset(20)
             maker.bottom.equalTo(demoButton.snp.top).inset(-50)
         }
