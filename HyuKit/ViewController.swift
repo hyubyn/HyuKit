@@ -14,41 +14,19 @@ import RxSwift
 class ViewController: BaseViewViewController {
 
     lazy var demoButton: HyuButton = {
-        return HyuButton(properties: GradientButtonProperties(frame: CGRect(x: self.screenWidth / 4, y: self.screenHeight / 2 - 15, width: 80, height: 80), title: "Start", titleColor: UIColor.white, gradientColors: [UIColor.blue, UIColor.green], gradientOrientation: .horizontal, cornerRadius: 40))
+        return HyuButton(properties: GradientButtonProperties(frame: CGRect(x: self.screenWidth / 4, y: self.screenHeight / 2 - 15, width: 100, height: 80), title: "Start", titleColor: UIColor.white, gradientColors: [UIColor.blue, UIColor.green], gradientOrientation: .horizontal, cornerRadius: 30))
     }()
     
-    lazy var firstButton: HyuButton = {
-        return HyuButton(properties: GradientButtonProperties(frame: CGRect(x: 0, y: 0, width: 80, height: 80), title: "Start", titleColor: UIColor.white, gradientColors: [UIColor.blue, UIColor.green], gradientOrientation: .horizontal, cornerRadius: 40))
+    lazy var colorPicker: ColorPicker = {
+        let picker = ColorPicker()
+        picker.delegate = self
+        picker.backgroundColor = UIColor.white
+        return picker
     }()
     
-    lazy var secondButton: HyuButton = {
-        return HyuButton(properties: GradientButtonProperties(frame: CGRect(x: 0, y: 0, width: 80, height: 80), title: "Start", titleColor: UIColor.white, gradientColors: [UIColor.blue, UIColor.green], gradientOrientation: .horizontal, cornerRadius: 40))
-    }()
-    
-    lazy var thirdButton: HyuButton = {
-        return HyuButton(properties: GradientButtonProperties(frame: CGRect(x: 0, y: 0, width: 80, height: 80), title: "Start", titleColor: UIColor.white, gradientColors: [UIColor.blue, UIColor.green], gradientOrientation: .horizontal, cornerRadius: 40))
-    }()
-    
-    lazy var containerView: UIView = {
-       let view = UIView()
-        view.addSubview(self.firstButton)
-        view.addSubview(self.secondButton)
-        view.addSubview(self.thirdButton)
-        return view
-    }()
+    var gradientLayer = CAGradientLayer()
     
     let disposeBag = DisposeBag()
-    var isShowing = false
-    
-    // demo observable with RxSwift
-    lazy var circleView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        view.backgroundColor = UIColor.red
-        view.layer.cornerRadius = 25
-        return view
-    }()
-    
-    let viewModel = ViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,46 +36,15 @@ class ViewController: BaseViewViewController {
     
     func setupView() {
         view.addSubview(demoButton)
+        view.addSubview(colorPicker)
         
-        view.addSubview(containerView)
-        
-        containerView.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(demoButton)
-            maker.center.equalTo(demoButton)
+        colorPicker.snp.makeConstraints { (maker) in
+            maker.height.equalTo(80)
+            maker.leading.trailing.equalTo(view).inset(20)
+            maker.bottom.equalTo(demoButton.snp.top).inset(-50)
         }
         
-        firstButton.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(demoButton)
-            maker.leading.equalTo(0)
-            maker.top.equalTo(0)
-        }
-        
-        secondButton.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(demoButton)
-            maker.centerX.equalTo(0)
-            maker.top.equalTo(0)
-        }
-        
-        thirdButton.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(demoButton)
-            maker.trailing.equalTo(0)
-            maker.top.equalTo(0)
-        }
-        
-        view.bringSubview(toFront: demoButton);
-        
-        view.addSubview(circleView)
-        
-        // Add gesture recognizer
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(circleMoved(_:)))
-        circleView.addGestureRecognizer(gestureRecognizer)
-    }
-    
-    func circleMoved(_ recognizer: UIPanGestureRecognizer) {
-        let location = recognizer.location(in: view)
-        UIView.animate(withDuration: 0.1) {
-            self.circleView.center = location
-        }
+        colorPicker.hideColorPicker()
     }
     
     func setupRx() {
@@ -107,44 +54,27 @@ class ViewController: BaseViewViewController {
                 self?.demoButtonTapped()
             })
             .disposed(by: disposeBag)
-        
-        circleView
-            .rx.observe(CGPoint.self, "center")
-            .bindTo(viewModel.centerVariable)
-            .addDisposableTo(disposeBag)
-        
-        viewModel.backgroundColorObservable
-            .subscribe(onNext: { [weak self](backgroundColor) in
-                UIView.animate(withDuration: 0.1) {
-                    self?.view.backgroundColor = backgroundColor
-                }
-            }).addDisposableTo(disposeBag)
-        
-        
-    
     }
 
     func demoButtonTapped() {
-        UIView.animate(withDuration: 2.5, animations: {
-            if self.isShowing {
-                self.containerView.snp.remakeConstraints { (maker) in
-                    maker.width.height.equalTo(self.demoButton)
-                    maker.center.equalTo(self.demoButton)
-                }
-            } else {
-                self.containerView.snp.makeConstraints { (maker) in
-                    maker.width.height.equalTo(self.view.snp.width).dividedBy(2)
-                    maker.centerX.equalTo(self.demoButton)
-                    maker.bottom.equalTo(self.demoButton)
-                }
-            }
-        }) { (_) in
-            self.isShowing = !self.isShowing
-            self.view.layoutIfNeeded()
+        if colorPicker.isHidden {
+            colorPicker.showColorPicker()
+        } else {
+            colorPicker.hideColorPicker()
         }
-        
-        
     }
 
+}
+
+extension ViewController: ColorPickerDelegate {
+    func didSelectColor(color: UIColor) {
+        if var nearBy = color.getNearByColor() {
+            nearBy.insert(color, at: 0)
+            UIView.createGradientColors(for: view, with: nearBy, GradientStartPosition.top, layer: &gradientLayer)
+        } else {
+            UIView.createGradientColors(for: view, with: [color, color.getInverseColor()?.withAlphaComponent(0.5) ?? color.withAlphaComponent(0.5) ], GradientStartPosition.top, layer: &gradientLayer)
+        }
+        
+    }
 }
 
