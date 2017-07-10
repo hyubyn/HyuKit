@@ -101,7 +101,7 @@ extension UIColor {
                 color1 = UIColor.init(red: red , green: green, blue: blue / 2 > 0 ? blue / 2 : 0.1, alpha: alpha / 2)
                 color2 = UIColor.init(red: red , green: green , blue: blue * 2 < 1.0 ? blue * 2 : 0.9, alpha: alpha / 2)
             }
-            return [color1!, color2!]
+            return [color2!, color1!]
         }
         return nil
     }
