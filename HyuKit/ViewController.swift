@@ -24,6 +24,8 @@ class ViewController: BaseViewViewController {
         return picker
     }()
     
+    var gradientLayer = CAGradientLayer()
+    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -66,7 +68,13 @@ class ViewController: BaseViewViewController {
 
 extension ViewController: ColorPickerDelegate {
     func didSelectColor(color: UIColor) {
-        view.backgroundColor = color
+        if var nearBy = color.getNearByColor() {
+            nearBy.insert(color, at: 0)
+            UIView.createGradientColors(for: view, with: nearBy, GradientStartPosition.top, layer: &gradientLayer)
+        } else {
+            UIView.createGradientColors(for: view, with: [color, color.getInverseColor()?.withAlphaComponent(0.5) ?? color.withAlphaComponent(0.5) ], GradientStartPosition.top, layer: &gradientLayer)
+        }
+        
     }
 }
 

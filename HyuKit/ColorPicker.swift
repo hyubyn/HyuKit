@@ -14,7 +14,7 @@ protocol ColorPickerDelegate {
 
 class ColorPicker: UIView {
     
-    var listColor = [UIColor.white, UIColor.blue, UIColor.green, UIColor.yellow, UIColor.orange, UIColor.brown, UIColor.red, UIColor.purple, UIColor.gray, UIColor.darkGray]
+    var listColor = [UIColor.white, UIColor.cyan.withAlphaComponent(0.9), UIColor.green.withAlphaComponent(0.9), UIColor.yellow.withAlphaComponent(0.9), UIColor.orange.withAlphaComponent(0.9), UIColor.blue.withAlphaComponent(0.9), UIColor.brown.withAlphaComponent(0.9), UIColor.red.withAlphaComponent(0.9), UIColor.purple.withAlphaComponent(0.9), UIColor.gray.withAlphaComponent(0.9), UIColor.darkGray.withAlphaComponent(0.9)]
     
     var delegate: ColorPickerDelegate?
     

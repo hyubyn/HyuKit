@@ -70,4 +70,34 @@ extension UIColor {
             return [UIColor.white]
         }
     }
+    
+    func getNearByColor(option: SimilarColorOption = .green) -> [UIColor]? {
+        var alpha: CGFloat = 0.0
+        var red: CGFloat = 0.0
+        var green: CGFloat = 0.0
+        var blue: CGFloat = 0.0
+        var color1, color2: UIColor?
+        
+        if getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+            switch option {
+            case .green:
+                color1 = UIColor.init(red: red, green: green / 2 > 0 ? green / 2 : 0.1, blue: blue, alpha: alpha / 2)
+                color2 = UIColor.init(red: red, green: green * 2 < 1.0 ? green * 2 : 0.9, blue: blue, alpha: alpha / 2)
+            case .red:
+                color1 = UIColor.init(red: red / 2 > 0 ? red / 2 : 0.1, green: green, blue: blue, alpha: alpha / 2)
+                color2 = UIColor.init(red: red * 2 < 1.0 ? red * 2 : 0.9, green: green , blue: blue, alpha: alpha / 2)
+            default:
+                color1 = UIColor.init(red: red , green: green, blue: blue / 2 > 0 ? blue / 2 : 0.1, alpha: alpha / 2)
+                color2 = UIColor.init(red: red , green: green , blue: blue * 2 < 1.0 ? blue * 2 : 0.9, alpha: alpha / 2)
+            }
+            return [color1!, color2!]
+        }
+        return nil
+    }
+}
+
+enum SimilarColorOption: Int {
+    case red = 0
+    case green = 1
+    case blue = 2
 }

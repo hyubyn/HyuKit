@@ -67,10 +67,10 @@ extension UIView {
         self.layer.insertSublayer(gradient, at: 0)
     }
    
-    func applyGradientColors(with colors: [UIColor], _ startPosition: GradientStartPosition) {
-        let gradientLayer = CAGradientLayer()
+    class func createGradientColors(for view: UIView, with colors: [UIColor], _ startPosition: GradientStartPosition, layer gradientLayer: inout CAGradientLayer) {
+        gradientLayer.removeFromSuperlayer()
+        gradientLayer.frame = view.bounds
         gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.frame = bounds
         switch startPosition {
         case .top:
             gradientLayer.startPoint = CGPoint.init(x: 0.5, y: 0)
@@ -85,7 +85,7 @@ extension UIView {
             gradientLayer.startPoint = CGPoint.init(x: 0, y: 0.5)
             gradientLayer.endPoint = CGPoint.init(x: 1, y: 0.5)
         }
-        layer.insertSublayer(gradientLayer, at: 0)
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
 
 }
