@@ -9,6 +9,12 @@
 import UIKit
 
 extension UIColor {
+    
+    /*
+     Function: getInverseColor
+     Get opposite color of current color in color wheel
+     */
+    
     func getInverseColor() -> UIColor? {
         var alpha: CGFloat = 0.0
         var white: CGFloat = 0.0
@@ -71,6 +77,11 @@ extension UIColor {
         }
     }
     
+    
+    /*
+     Function: getNearByColor
+     return left and right color with alpha = 1/2 current color in color wheel
+     */
     func getNearByColor(option: SimilarColorOption = .green) -> [UIColor]? {
         var alpha: CGFloat = 0.0
         var red: CGFloat = 0.0
