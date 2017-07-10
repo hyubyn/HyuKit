@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F3552501E76E4B90004878E /* ExplosiveButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F35524F1E76E4B90004878E /* ExplosiveButtons.swift */; };
+		4F3552521E783AAC0004878E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3552511E783AAC0004878E /* ViewModel.swift */; };
 		4F7637FF1E65D6B0000338C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7637FE1E65D6B0000338C1 /* AppDelegate.swift */; };
 		4F7638011E65D6B0000338C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7638001E65D6B0000338C1 /* ViewController.swift */; };
 		4F7638041E65D6B0000338C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7638021E65D6B0000338C1 /* Main.storyboard */; };
@@ -21,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		21DC6CF4449CA48F264EA8F1 /* Pods-HyuKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HyuKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HyuKit/Pods-HyuKit.debug.xcconfig"; sourceTree = "<group>"; };
+		4F35524F1E76E4B90004878E /* ExplosiveButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplosiveButtons.swift; sourceTree = "<group>"; };
+		4F3552511E783AAC0004878E /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4F7637FB1E65D6B0000338C1 /* HyuKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HyuKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7637FE1E65D6B0000338C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F7638001E65D6B0000338C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 				4F7638071E65D6B0000338C1 /* LaunchScreen.storyboard */,
 				4F76380A1E65D6B0000338C1 /* Info.plist */,
 				4FC9CB6F1E672D63004ED494 /* BaseViewViewController.swift */,
+				4F3552511E783AAC0004878E /* ViewModel.swift */,
 			);
 			name = StartupFiles;
 			sourceTree = "<group>";
@@ -103,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				4F7638121E65DCB2000338C1 /* HyuButton.swift */,
+				4F35524F1E76E4B90004878E /* ExplosiveButtons.swift */,
 			);
 			name = HyuComponents;
 			sourceTree = "<group>";
@@ -260,8 +266,10 @@
 				4F7638011E65D6B0000338C1 /* ViewController.swift in Sources */,
 				4F7637FF1E65D6B0000338C1 /* AppDelegate.swift in Sources */,
 				4FC9CB741E673FFA004ED494 /* DefaultAppSetting.swift in Sources */,
+				4F3552501E76E4B90004878E /* ExplosiveButtons.swift in Sources */,
 				4F7638131E65DCB2000338C1 /* HyuButton.swift in Sources */,
 				4F7638161E65DF06000338C1 /* UIView+Gradient.swift in Sources */,
+				4F3552521E783AAC0004878E /* ViewModel.swift in Sources */,
 				4FC9CB701E672D63004ED494 /* BaseViewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
