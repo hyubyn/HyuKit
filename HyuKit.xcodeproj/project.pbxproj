@@ -16,6 +16,10 @@
 		4F7638161E65DF06000338C1 /* UIView+Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7638151E65DF06000338C1 /* UIView+Gradient.swift */; };
 		4FC9CB701E672D63004ED494 /* BaseViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC9CB6F1E672D63004ED494 /* BaseViewViewController.swift */; };
 		4FC9CB741E673FFA004ED494 /* DefaultAppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC9CB731E673FFA004ED494 /* DefaultAppSetting.swift */; };
+		CB3E42F81F1352E500E47FD4 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3E42F71F1352E500E47FD4 /* UIColor.swift */; };
+		CB3E42FA1F135D2200E47FD4 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3E42F91F135D2200E47FD4 /* UIViewController.swift */; };
+		CB3E42FC1F13611600E47FD4 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3E42FB1F13611600E47FD4 /* ColorPicker.swift */; };
+		CB3E42FE1F1365A400E47FD4 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3E42FD1F1365A400E47FD4 /* UIView.swift */; };
 		E23F159A55116A0DEFF9FF03 /* Pods_HyuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EA6DC939EEC9229F9B8FDD9 /* Pods_HyuKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +37,10 @@
 		4FC9CB6F1E672D63004ED494 /* BaseViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewViewController.swift; sourceTree = "<group>"; };
 		4FC9CB731E673FFA004ED494 /* DefaultAppSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultAppSetting.swift; sourceTree = "<group>"; };
 		7EA6DC939EEC9229F9B8FDD9 /* Pods_HyuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HyuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB3E42F71F1352E500E47FD4 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		CB3E42F91F135D2200E47FD4 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		CB3E42FB1F13611600E47FD4 /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
+		CB3E42FD1F1365A400E47FD4 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		FD65DDC10B056B66E3C517CC /* Pods-HyuKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HyuKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-HyuKit/Pods-HyuKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +103,9 @@
 			isa = PBXGroup;
 			children = (
 				4F7638151E65DF06000338C1 /* UIView+Gradient.swift */,
+				CB3E42F71F1352E500E47FD4 /* UIColor.swift */,
+				CB3E42F91F135D2200E47FD4 /* UIViewController.swift */,
+				CB3E42FD1F1365A400E47FD4 /* UIView.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -103,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				4F7638121E65DCB2000338C1 /* HyuButton.swift */,
+				CB3E42FB1F13611600E47FD4 /* ColorPicker.swift */,
 			);
 			name = HyuComponents;
 			sourceTree = "<group>";
@@ -217,7 +229,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A90933B6DA4D18EF890C822A /* [CP] Embed Pods Frameworks */ = {
@@ -257,11 +269,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB3E42FE1F1365A400E47FD4 /* UIView.swift in Sources */,
 				4F7638011E65D6B0000338C1 /* ViewController.swift in Sources */,
+				CB3E42F81F1352E500E47FD4 /* UIColor.swift in Sources */,
 				4F7637FF1E65D6B0000338C1 /* AppDelegate.swift in Sources */,
 				4FC9CB741E673FFA004ED494 /* DefaultAppSetting.swift in Sources */,
 				4F7638131E65DCB2000338C1 /* HyuButton.swift in Sources */,
+				CB3E42FC1F13611600E47FD4 /* ColorPicker.swift in Sources */,
 				4F7638161E65DF06000338C1 /* UIView+Gradient.swift in Sources */,
+				CB3E42FA1F135D2200E47FD4 /* UIViewController.swift in Sources */,
 				4FC9CB701E672D63004ED494 /* BaseViewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

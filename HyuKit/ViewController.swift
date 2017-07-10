@@ -17,6 +17,13 @@ class ViewController: BaseViewViewController {
         return HyuButton(properties: GradientButtonProperties(frame: CGRect(x: self.screenWidth / 4, y: self.screenHeight / 2 - 15, width: 100, height: 80), title: "Start", titleColor: UIColor.white, gradientColors: [UIColor.blue, UIColor.green], gradientOrientation: .horizontal, cornerRadius: 30))
     }()
     
+    lazy var colorPicker: ColorPicker = {
+        let picker = ColorPicker()
+        picker.backgroundColor = UIColor.brown
+        picker.delegate = self
+        return picker
+    }()
+    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -27,6 +34,15 @@ class ViewController: BaseViewViewController {
     
     func setupView() {
         view.addSubview(demoButton)
+        view.addSubview(colorPicker)
+        
+        colorPicker.snp.makeConstraints { (maker) in
+            maker.height.equalTo(60)
+            maker.leading.trailing.equalTo(view).inset(20)
+            maker.bottom.equalTo(demoButton.snp.top).inset(-50)
+        }
+        
+        colorPicker.hideColorPicker()
     }
     
     func setupRx() {
@@ -39,8 +55,18 @@ class ViewController: BaseViewViewController {
     }
 
     func demoButtonTapped() {
-        print("The button is pressed")
+        if colorPicker.isHidden {
+            colorPicker.showColorPicker()
+        } else {
+            colorPicker.hideColorPicker()
+        }
     }
 
+}
+
+extension ViewController: ColorPickerDelegate {
+    func didSelectColor(color: UIColor) {
+        view.backgroundColor = color
+    }
 }
 

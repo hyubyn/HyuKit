@@ -40,6 +40,14 @@ enum GradientOrientation {
     }
 }
 
+enum GradientStartPosition: Int {
+    case top = 0
+    case topLeft = 1
+    case topRight = 2
+    case left = 3
+}
+
+
 extension UIView {
     
     func applyGradient(withColours colours: [UIColor], locations: [NSNumber]? = nil) -> Void {
@@ -58,4 +66,26 @@ extension UIView {
         gradient.endPoint = orientation.endPoint
         self.layer.insertSublayer(gradient, at: 0)
     }
+   
+    func applyGradientColors(with colors: [UIColor], _ startPosition: GradientStartPosition) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.frame = bounds
+        switch startPosition {
+        case .top:
+            gradientLayer.startPoint = CGPoint.init(x: 0.5, y: 0)
+            gradientLayer.endPoint = CGPoint.init(x: 0.5, y: 1)
+        case .topLeft:
+            gradientLayer.startPoint = CGPoint.init(x: 0, y: 0)
+            gradientLayer.endPoint = CGPoint.init(x: 1, y: 1)
+        case .topRight:
+            gradientLayer.startPoint = CGPoint.init(x: 1, y: 0)
+            gradientLayer.endPoint = CGPoint.init(x: 0, y: 1)
+        default:
+            gradientLayer.startPoint = CGPoint.init(x: 0, y: 0.5)
+            gradientLayer.endPoint = CGPoint.init(x: 1, y: 0.5)
+        }
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
+
 }
