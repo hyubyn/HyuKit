@@ -24,6 +24,14 @@ class ViewController: BaseViewViewController {
         return picker
     }()
     
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.text = "Hello world, this is the first line of this application. I'm creating utilities for my own project"
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
     var gradientLayer = CAGradientLayer()
     
     let disposeBag = DisposeBag()
@@ -37,6 +45,7 @@ class ViewController: BaseViewViewController {
     func setupView() {
         view.addSubview(demoButton)
         view.addSubview(colorPicker)
+        view.addSubview(label)
         
         colorPicker.snp.makeConstraints { (maker) in
             maker.height.equalTo(80)
@@ -45,6 +54,10 @@ class ViewController: BaseViewViewController {
         }
         
         colorPicker.hideColorPicker()
+        
+        label.snp.makeConstraints { (maker) in
+            maker.top.leading.trailing.equalTo(view).inset(30)
+        }
     }
     
     func setupRx() {
@@ -68,6 +81,7 @@ class ViewController: BaseViewViewController {
 
 extension ViewController: ColorPickerDelegate {
     func didSelectColor(color: UIColor) {
+        label.textColor = color.getInverseColor()
         if var nearBy = color.getNearByColor() {
             nearBy.insert(color, at: 0)
             UIView.createGradientColors(for: view, with: nearBy, GradientStartPosition.top, layer: &gradientLayer)
